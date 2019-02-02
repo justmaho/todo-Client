@@ -21,15 +21,15 @@ script:
   - yarn build
   # build docker images
   - yarn build:docker
-  - docker tag unqpdes/todo-list-front:latest registry.heroku.com/pdes-2018-todo-list-front/web
+  - docker tag justmaho/$HEROKU_APP_NAME:latest registry.heroku.com/$HEROKU_APP_NAME/web
 
 deploy:
   provider: script
   script: 
     # push to dockerhub & heroku
-    docker push unqpdes/todo-list-front;
-    docker push registry.heroku.com/pdes-2018-todo-list-front/web;
-    heroku container:release web --app pdes-2018-todo-list-front
+    docker push justmaho/$HEROKU_APP_NAME;
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku container:release web --app $HEROKU_APP_NAME
   on:
     branch: master
 
