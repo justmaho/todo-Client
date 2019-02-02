@@ -21,13 +21,13 @@ script:
   - yarn build
   # build docker images
   - yarn build:docker
-  - docker tag justmaho/$HEROKU_APP_NAME:latest registry.heroku.com/$HEROKU_APP_NAME/web
+  - docker tag justmaho/todo_client:latest registry.heroku.com/$HEROKU_APP_NAME/web
 
 deploy:
   provider: script
   script: 
     # push to dockerhub & heroku
-    docker push justmaho/$HEROKU_APP_NAME;
+    docker push justmaho/todo_client;
     docker push registry.heroku.com/$HEROKU_APP_NAME/web;
     heroku container:release web --app $HEROKU_APP_NAME
   on:
