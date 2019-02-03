@@ -22,7 +22,7 @@ export default class AddTodoListItem extends React.Component {
             pipe(tap(this.addItem), _ => _.preventDefault())
           )}
         />
-        <Button raised color="primary" onClick={this.addItem}>Agregar</Button>
+        <Button raised color="primary" onClick={this.addItem}>Add</Button>
       </div>
     )
   }
