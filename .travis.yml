@@ -1,38 +1,37 @@
 sudo: required
 language: node_js
 node_js:
-  - "9"
+- '9'
 services:
-  - docker
-
+- docker
 before_install:
-  # install heroku CLI
-  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  # login to docker registries (dockerhub + heroku)
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
-
+- wget -qO- https://toolbelt.heroku.com/install.sh | sh
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 install:
-  # install deps
-  - yarn install
-
+- yarn install
 script:
-  - yarn test
-  - yarn build
-  # build docker images
-  - yarn build:docker
-  - docker tag justmaho/todo_client:latest registry.heroku.com/$HEROKU_APP_NAME/web
+- yarn test
+- yarn build
+- yarn build:docker
+- docker tag justmaho/todo_client:latest registry.heroku.com/$HEROKU_APP_NAME/web
+
+addons:
+  sonarcloud:
+    organization: "justmaho-github"
+    token:
+      secure: "Z5fgJ+o2TH2q/GKIRGjotsxj1EwX6CJ/VCZ6DW1Twltqy/mCX1ySNOLZ7Fj7Wday2iqfR+cK3Gy5gjGg9FIhS4aM4ml4PUzNtfrWXdbZwBxiHkf8D6CIDk7HRAYORsuq+WzfsUbg8ZV6JdAih02o0HWsbaP2YjvplkvJpt5II8zk3KNtpPqUUDA5BisUJqBax5bwqbrazVPhKkQD5HmbziWSwQ13hNKyP03LND5LEStEhDZxNoc8pmwGRRMgzQzQFXPbSprospGC2LOhjGEvckiNcFYF/fNTEYKJqhSSvNgVYA1pyhIcWetkEqAMT5CQC54/Ve5Dp6NH9UmBfqpu04h5sk/uK+CazyhivJsTDsTrJxWqePIXkPOPNWfu8gSt5lcZQqFlgCDX1lbNK0cD8MbboLpzxv1IBCb+VwOx9eOwb0U/R7dTpwQElmL81sU5DfRlyBBn9o1oMQS6sQ2pX4bmm8rU8glnqYuTuUakPBRJfXc//l8OsH0K8RfgkYuniHVBqrijV5vfDVxauw13rMnyZzmL684bu34PJSMrdtKouyXCBGJmlZwHgkqCZMzvaDQutbNf5GcM9hQLZtNy1pO95gdwS2VZHqvscz6/m97HlZW5AKd4/LJgh0H+4e5F9Zrq06oy36h4ZTlCGQLdt0bqm5DgbLDytke39rv8AAs="
+script:
+  - sonar-scanner
 
 deploy:
   provider: script
-  script: 
-    # push to dockerhub & heroku
-    docker push justmaho/todo_client;
-    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+  script: docker push justmaho/todo_client; docker push registry.heroku.com/$HEROKU_APP_NAME/web;
     heroku container:release web --app $HEROKU_APP_NAME
   on:
     branch: master
-
 notifications:
   slack: justmaho:PWcuoJOJBreyeCP35p8PfDq9
-
+env:
+  global:
+    secure: ac0JKRgkEUoXFq/oOxbVmlSUdHX4R4O9w63nHVVKjdb5FlSzckifIQkiP5Mzvrilyn21nxoiTcgKmFJjMj67rQ7xOJKaV0Yu6L9V2lOfR/eLMSh7jpLaKKuoWtvpRECe6laKj8N9Svw6YebuKfP/wisp1Po159++UZneDlsakAxeBaFo4BLJsVZbijulDyaU2k6ZeQySSZK3Iqc8xNXa9tDHAFkI7iw5GpNeULNgw02E+samXg+SVs9hwDunE2MuoXgyq0mb9StvvOE4D13YblMoO/MQDiU8SpIp4E8jac8wYxk0hiNad3s0pvZsn2LrJvywR9Q3gLeL2swQVgpq3g/W2pkUjyQ2tm/a7T3brkABgvfoLpFe+cjVOd4pU4xku7uoT7FO390Z69qg3iOPtDyYsNnAcIWmD7INE4orKUL/Ox+mZGt1Kp2ztjOWBd4hQtF056GUZ5yXoLBP/VD4RX9oX2sPkMoG0ALEeZ/xYBodxBXXGSDddnmszZ8IJyWRQ8sDEJu9Ysgo/JGulIbXAlvp+pDwRRI0D3+YxG9cj6K2ZAr4BfJCw5m4vKCPizWnHkKaTF7PlvElbMG+iPJbyclnIry68zPwS8FOyBCcAzdOPzZ6wgQicECcHLH9hVLOHSMEOS79DHhXwJG8+U2XQy8VEl8uqJ0h2EdN5a/Dpqc=
