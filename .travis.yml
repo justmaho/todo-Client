@@ -26,8 +26,10 @@ script:
 
 deploy:
   provider: script
-  script: docker push justmaho/todo_client; docker push registry.heroku.com/$HEROKU_APP_NAME/web;
-    heroku container:release web --app $HEROKU_APP_NAME
+  script: docker push justmaho/todo_client; 
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku container:push web --app $HEROKU_APP;
+    heroku container:release web --app $HEROKU_APP_NAME;
   on:
     branch: master
 notifications:
