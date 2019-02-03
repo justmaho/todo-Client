@@ -6,7 +6,7 @@ import { mount } from 'enzyme'
 it('renders without crashing', () => {
   const wrapper = mount(<AddTodoListItem />)
 
-  expect(wrapper.text()).toEqual('TextAgregar')
+  expect(wrapper.text()).toEqual('TextAdd')
 })
 
 it('calls the add item on click', () => {

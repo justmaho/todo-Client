@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import './App.css'
 import TodoList from './components/TodoList'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import { purple, green } from 'material-ui/colors'
+import { green, blueGrey } from 'material-ui/colors'
 
 const theme = createMuiTheme({
   palette: {
-    primary: purple,
+    primary: blueGrey,
     secondary: green,
   },
   status: {
@@ -20,7 +20,7 @@ export default class App extends Component {
       <MuiThemeProvider theme={theme}>
         <div className="App">
           <header className="App-header">
-            <h1 className="App-title">Lista de Pendientes</h1>
+            <h1 className="App-title">Todo list</h1>
           </header>
           <div className="App-intro">
             <TodoList />
