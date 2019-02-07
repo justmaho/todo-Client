@@ -20,7 +20,7 @@ export default class App extends Component {
       <MuiThemeProvider theme={theme}>
         <div className="App">
           <header className="App-header">
-            <h1 className="App-title">Todo list</h1>
+            <h1 className="App-title">Todo list 2</h1>
           </header>
           <div className="App-intro">
             <TodoList />
