@@ -16,7 +16,7 @@ const store = createStore(
     applyMiddleware(thunk)
   )
 )
-
+//updating this just to test gerrit
 if (window.Cypress) { // eslint-disable-line no-undef
   window.cypressStore = store;
 }
